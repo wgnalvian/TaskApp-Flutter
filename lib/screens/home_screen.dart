@@ -29,11 +29,12 @@ class Home extends StatelessWidget {
         
         List<Task> tasksList = state.allTasks;
         return Scaffold(
+          drawer: Drawer(backgroundColor: Colors.red),
           appBar: AppBar(title: const Text('Taks App')),
           body: Column(
             children: [
-              const Center(
-                child: Chip(label: Text('Taks :')),
+            Center(
+                child: Chip(label: Text("${tasksList.length.toString()} Tasks")),
               ),
               ListTask(
                 tasks: tasksList,
