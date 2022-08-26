@@ -31,7 +31,7 @@ class Home extends StatelessWidget {
         .state
         .deleteTasks;
        
-print(tasksDeleteList);
+
         
     return BlocBuilder<TasksBloc, TasksState>(
       builder: (context, state) {
