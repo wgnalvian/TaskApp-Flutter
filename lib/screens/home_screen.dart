@@ -6,13 +6,11 @@ import 'package:task_app/models/task.dart';
 import 'package:task_app/screens/add_task_screen.dart';
 import 'package:task_app/widgets/list_task.dart';
 
+import 'drawer_screen.dart';
+
 class Home extends StatelessWidget {
   static String url = "/";
-  Home({Key? key}) : super(key: key);
-
-
-
-  
+  const Home({Key? key}) : super(key: key);
 
   void _addTask(BuildContext context) {
     showModalBottomSheet(
@@ -24,17 +22,32 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   return BlocBuilder<TasksBloc, TasksState>(
-      builder: (context, state) {
+    List<Task> tasksList = context
+        .watch<TasksBloc>()
+        .state
+        .allTasks;
+          List<Task> tasksDeleteList = context
+        .watch<TasksBloc>()
+        .state
+        .deleteTasks;
+       
+print(tasksDeleteList);
         
-        List<Task> tasksList = state.allTasks;
+    return BlocBuilder<TasksBloc, TasksState>(
+      builder: (context, state) {
+       
+           
         return Scaffold(
-          drawer: Drawer(backgroundColor: Colors.red),
+          drawer: DrawerScreen(
+            tasksList: tasksList,
+            taskDeleteList: tasksDeleteList,
+          ),
           appBar: AppBar(title: const Text('Taks App')),
           body: Column(
             children: [
-            Center(
-                child: Chip(label: Text("${tasksList.length.toString()} Tasks")),
+              Center(
+                child:
+                    Chip(label: Text("${tasksList.length.toString()} Tasks")),
               ),
               ListTask(
                 tasks: tasksList,

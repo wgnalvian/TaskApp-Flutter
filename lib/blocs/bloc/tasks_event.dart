@@ -37,3 +37,12 @@ class UpdateTask extends TasksEvent {
   List<Object> get props => [];
 }
 
+class MoveToBin extends TasksEvent {
+  final Task task;
+  const MoveToBin({
+    required this.task
+  });
+   @override
+  List<Object> get props => [];
+}
+

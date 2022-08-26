@@ -1,0 +1,53 @@
+import 'package:flutter/material.dart';
+import 'package:task_app/models/task.dart';
+
+class DrawerScreen extends StatelessWidget {
+final List<Task> tasksList;
+final List<Task> taskDeleteList;
+  const DrawerScreen({
+    Key? key,
+    required this.taskDeleteList,
+   required this.tasksList
+  }):super(key: key); 
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Drawer(
+        backgroundColor: Colors.grey.shade400,
+        child: Column(
+          children: [
+            Container(
+                width: double.infinity,
+                color: Colors.blue,
+                child: const Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Text(
+                      "Menu Bar",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold),
+                    ))),
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed('/');
+              },
+              child: ListTile(
+                leading: Icon(Icons.folder_copy),
+                title: Text("My Task"),
+                trailing: Text("${tasksList.length}"),
+              ),
+            ),
+            ListTile(
+              onTap: () { Navigator.pushNamed(context, '/bin'); },
+              leading: Icon(Icons.restore_from_trash),
+              title: Text('Bin'),
+              trailing: Text("${taskDeleteList.length}"),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}

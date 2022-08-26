@@ -7,11 +7,12 @@ part of 'tasks_bloc.dart';
 
 class TasksState extends Equatable {
   List<Task> allTasks;
+  List<Task> deleteTasks;
 
-  TasksState({this.allTasks = const <Task>[]});
+  TasksState({this.allTasks = const <Task>[],this.deleteTasks = const <Task>[]});
 
   @override
-  List<Object> get props => [allTasks];
+  List<Object> get props => [allTasks,deleteTasks];
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{

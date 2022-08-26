@@ -14,13 +14,15 @@ class ListTask extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
+    String? nameRoute = ModalRoute.of(context)!.settings.name;
     return Expanded(
         child: ListView.builder(
       itemBuilder: (context, index) {
         
         return ListTile(
           onLongPress: () =>
-              context.read<TasksBloc>().add(DeleteTask(task: tasks[index])),
+          nameRoute != null && nameRoute == '/bin' ? context.read<TasksBloc>().add(DeleteTask(task: tasks[index])) :
+              context.read<TasksBloc>().add(MoveToBin(task: tasks[index])),
           title: Text(
             tasks[index].title,
             style: TextStyle(
