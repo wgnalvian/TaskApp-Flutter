@@ -18,7 +18,7 @@ class AddTask extends TasksEvent {
 }
 
 class DeleteTask extends TasksEvent {
-   final Task task;
+  final Task task;
   const DeleteTask({
     required this.task,
   });
@@ -28,7 +28,7 @@ class DeleteTask extends TasksEvent {
 }
 
 class UpdateTask extends TasksEvent {
-   final Task task;
+  final Task task;
   const UpdateTask({
     required this.task,
   });
@@ -39,10 +39,21 @@ class UpdateTask extends TasksEvent {
 
 class MoveToBin extends TasksEvent {
   final Task task;
-  const MoveToBin({
-    required this.task
-  });
-   @override
+  const MoveToBin({required this.task});
+  @override
   List<Object> get props => [];
 }
 
+class SwitchPanel extends TasksEvent {
+  final Task task;
+  const SwitchPanel({required this.task});
+  @override
+  List<Object> get props => [];
+}
+
+class SwitchFavorite extends TasksEvent {
+  final Task task;
+  const SwitchFavorite({required this.task});
+  @override
+  List<Object> get props => [];
+}

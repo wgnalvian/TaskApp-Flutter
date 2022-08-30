@@ -11,7 +11,9 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     on<AddTask>(_onAddTask);
     on<UpdateTask>(_onUpdateTask);
     on<MoveToBin>(_onMoveToBin);
+    on<SwitchPanel>(_onSwitchPanel);
     on<DeleteTask>(_onDeleteTask);
+    on<SwitchFavorite>(_onSwitchFavorite);
   }
 
   void _onAddTask(AddTask event, Emitter<TasksState> emit) {
@@ -22,7 +24,7 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
   void _onUpdateTask(UpdateTask event, Emitter<TasksState> emit) {
     final state = this.state;
     Task task = event.task;
-    int index = state.allTasks.indexOf(task);
+    int index = state.allTasks.indexWhere((element) => task.id == element.id);
     List<Task> alltask = List.from(state.allTasks)..remove(task);
     task.isDone == false
         ? alltask.insert(index, task.copyWith(isDone: true))
@@ -42,12 +44,38 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
   }
 
   void _onMoveToBin(MoveToBin event, Emitter<TasksState> emit) {
-     final state = this.state;
-    emit(TasksState(allTasks: List.from(state.allTasks)..remove(event.task),deleteTasks: List.from(state.deleteTasks)..add(event.task)));
+    final state = this.state;
+    emit(TasksState(
+        allTasks: List.from(state.allTasks)..remove(event.task),
+        deleteTasks: List.from(state.deleteTasks)..add(event.task)));
   }
 
   @override
   Map<String, dynamic>? toJson(TasksState state) {
     return state.toMap();
+  }
+
+  void _onSwitchPanel(SwitchPanel event, Emitter<TasksState> emit) {
+    final state = this.state;
+    Task task = event.task;
+    int index = state.allTasks.indexOf(task);
+    List<Task> alltask = List.from(state.allTasks)..remove(task);
+    print(task.isExpand == false);
+    task.isExpand == false
+        ? alltask.insert(index, task.copyWith(isExpand: true))
+        : alltask.insert(index, task.copyWith(isExpand: false));
+    emit(TasksState(allTasks: alltask));
+  }
+
+  void _onSwitchFavorite(event, emit) {
+    final state = this.state;
+    Task task = event.task;
+    int index = state.allTasks.indexWhere((element) => task.id == element.id);
+    List<Task> alltask = List.from(state.allTasks)..remove(task);
+    task.isFav == false
+        ? alltask.insert(index, task.copyWith(isFav: true))
+        : alltask.insert(index, task.copyWith(isFav: false));
+
+    emit(TasksState(allTasks: alltask));
   }
 }

@@ -8,7 +8,6 @@ class RecycleBin extends StatelessWidget {
   static const url = "/bin";
   @override
   Widget build(BuildContext context) {
-    
     final deleteTask = context.watch<TasksBloc>().state.deleteTasks;
     return Scaffold(
       appBar: AppBar(title: const Text('Recycle Bin')),
@@ -21,11 +20,6 @@ class RecycleBin extends StatelessWidget {
             tasks: deleteTask,
           )
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Add Task',
-        child: const Icon(Icons.add),
       ),
     );
   }
